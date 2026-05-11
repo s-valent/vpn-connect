@@ -1,21 +1,32 @@
-.PHONY: project icon build release run clean
+.PHONY: build release install run clean
 
-project:
-	xcodegen generate
+APP_NAME := VPN Connect
+APP_BUNDLE := .build/$(APP_NAME).app
 
-icon:
-	swift scripts/generate_icon.swift
+build:
+	swift build
+	@mkdir -p "$(APP_BUNDLE)/Contents/MacOS"
+	@mkdir -p "$(APP_BUNDLE)/Contents/Resources"
+	swift scripts/generate_icon.swift "$(APP_BUNDLE)/Contents/Resources"
+	cp ".build/debug/VPN Connect" "$(APP_BUNDLE)/Contents/MacOS/"
+	cp "Info.plist" "$(APP_BUNDLE)/Contents/"
+	touch "$(APP_BUNDLE)"
 
-build: icon project
-	xcodebuild -project VPNConnect.xcodeproj -scheme VPNConnect -configuration Debug -derivedDataPath .build build
+release:
+	swift build -c release
+	@mkdir -p "$(APP_BUNDLE)/Contents/MacOS"
+	@mkdir -p "$(APP_BUNDLE)/Contents/Resources"
+	swift scripts/generate_icon.swift "$(APP_BUNDLE)/Contents/Resources"
+	cp ".build/release/VPN Connect" "$(APP_BUNDLE)/Contents/MacOS/"
+	cp "Info.plist" "$(APP_BUNDLE)/Contents/"
+	touch "$(APP_BUNDLE)"
 
-release: icon project
-	xcodebuild -project VPNConnect.xcodeproj -scheme VPNConnect -configuration Release -derivedDataPath .build build
+install: release
+	sudo cp -r "$(APP_BUNDLE)" /Applications/Utilities/
 
 run: build
-	open .build/Build/Products/Debug/VPN\ Connect.app
+	killall "$(APP_NAME)" || true
+	open "$(APP_BUNDLE)"
 
 clean:
 	rm -rf .build
-	rm -rf VPNConnect.xcodeproj
-	rm -rf VPNConnect/Resources

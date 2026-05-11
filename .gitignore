@@ -1,9 +1,2 @@
 .build/
-DerivedData/
-*.xcodeproj/
-*.xcworkspace/
-*.swp
-*.swo
 .DS_Store
-
-AppIcon.png

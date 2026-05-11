@@ -2,7 +2,7 @@
 
 import Cocoa
 
-let resourcesPath = "VPNConnect/Resources"
+let resourcesPath = CommandLine.arguments[1]
 let fileManager = FileManager.default
 if !fileManager.fileExists(atPath: resourcesPath) {
     try? fileManager.createDirectory(atPath: resourcesPath, withIntermediateDirectories: true)

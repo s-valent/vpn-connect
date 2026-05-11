@@ -17,32 +17,20 @@ A simple macOS menu bar app to connect/disconnect VPN.
 
 ## Building
 
-1. Generate the Xcode project:
+1. Run app while developing:
    ```bash
-   make project
+   make run
    ```
 
 2. Build the project:
    ```bash
-   make build
+   make release
    ```
 
 3. The built app will be at:
    ```
-   .build/Build/Products/Debug/VPN Connect.app
+   .build/VPN Connect.app
    ```
-
-## Running
-
-- Double-click the app in Finder or use:
-  ```bash
-  make run
-  ```
-
-- Or open the project in Xcode and run from there:
-  ```bash
-  open VPNConnect.xcodeproj
-  ```
 
 ## Usage
 
@@ -59,9 +47,3 @@ Before connecting, you need to set up a VPN in System Settings:
 1. Open **System Settings** > **VPN**
 2. Add a new VPN configuration or use an existing one
 3. The app will connect to your default/existing VPN configuration
-
-## Project Structure
-
-- `VPNConnect/VPNConnectApp.swift` - App entry point and menu bar UI
-- `VPNConnect/VPNManager.swift` - VPN connection management using NetworkExtension
-- `project.yml` - XcodeGen configuration
